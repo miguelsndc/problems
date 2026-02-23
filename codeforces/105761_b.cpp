@@ -1,0 +1,130 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using ii = pair<int, int>;
+#define sz(x) ((int)(x).size())
+int faz(int a, int b) {
+    int sz = 2;
+    set<ii> s;
+    s.insert({a, b});
+    for (int i = 1; i <= 100; i++) {
+        int t = b % 10;
+        b = (a + b) % 10;
+        a = t % 10;
+        if (s.count({a, b})) {
+            return sz + i;
+        }
+        s.insert({a, b});
+    }
+    return sz;
+}
+int ans[10][10];
+void dale() {
+    ans[0][1] = 62;
+    ans[0][2] = 22;
+    ans[0][3] = 62;
+    ans[0][4] = 22;
+    ans[0][5] = 5;
+    ans[0][6] = 22;
+    ans[0][7] = 62;
+    ans[0][8] = 22;
+    ans[0][9] = 62;
+    ans[1][0] = 62;
+    ans[1][1] = 62;
+    ans[1][2] = 62;
+    ans[1][3] = 14;
+    ans[1][4] = 62;
+    ans[1][5] = 62;
+    ans[1][6] = 62;
+    ans[1][7] = 62;
+    ans[1][8] = 14;
+    ans[1][9] = 62;
+    ans[2][0] = 22;
+    ans[2][1] = 14;
+    ans[2][2] = 22;
+    ans[2][3] = 62;
+    ans[2][4] = 22;
+    ans[2][5] = 62;
+    ans[2][6] = 6;
+    ans[2][7] = 62;
+    ans[2][8] = 22;
+    ans[2][9] = 62;
+    ans[3][0] = 62;
+    ans[3][1] = 62;
+    ans[3][2] = 62;
+    ans[3][3] = 62;
+    ans[3][4] = 14;
+    ans[3][5] = 62;
+    ans[3][6] = 62;
+    ans[3][7] = 62;
+    ans[3][8] = 62;
+    ans[3][9] = 14;
+    ans[4][0] = 22;
+    ans[4][1] = 62;
+    ans[4][2] = 6;
+    ans[4][3] = 62;
+    ans[4][4] = 22;
+    ans[4][5] = 62;
+    ans[4][6] = 22;
+    ans[4][7] = 14;
+    ans[4][8] = 22;
+    ans[4][9] = 62;
+    ans[5][0] = 5;
+    ans[5][1] = 62;
+    ans[5][2] = 62;
+    ans[5][3] = 62;
+    ans[5][4] = 62;
+    ans[5][5] = 5;
+    ans[5][6] = 62;
+    ans[5][7] = 62;
+    ans[5][8] = 62;
+    ans[5][9] = 62;
+    ans[6][0] = 22;
+    ans[6][1] = 62;
+    ans[6][2] = 22;
+    ans[6][3] = 14;
+    ans[6][4] = 22;
+    ans[6][5] = 62;
+    ans[6][6] = 22;
+    ans[6][7] = 62;
+    ans[6][8] = 6;
+    ans[6][9] = 62;
+    ans[7][0] = 62;
+    ans[7][1] = 14;
+    ans[7][2] = 62;
+    ans[7][3] = 62;
+    ans[7][4] = 62;
+    ans[7][5] = 62;
+    ans[7][6] = 14;
+    ans[7][7] = 62;
+    ans[7][8] = 62;
+    ans[7][9] = 62;
+    ans[8][0] = 22;
+    ans[8][1] = 62;
+    ans[8][2] = 22;
+    ans[8][3] = 62;
+    ans[8][4] = 6;
+    ans[8][5] = 62;
+    ans[8][6] = 22;
+    ans[8][7] = 62;
+    ans[8][8] = 22;
+    ans[8][9] = 14;
+    ans[9][0] = 62;
+    ans[9][1] = 62;
+    ans[9][2] = 14;
+    ans[9][3] = 62;
+    ans[9][4] = 62;
+    ans[9][5] = 62;
+    ans[9][6] = 62;
+    ans[9][7] = 14;
+    ans[9][8] = 62;
+    ans[9][9] = 62;
+    int a, b; cin >> a >> b;
+    cout << ans[a][b] << '\n';
+}
+int main() {
+    cin.tie(0)->sync_with_stdio(0);
+    cin.exceptions(cin.failbit);
+    int tt = 1;  // cin >> tt;
+    while (tt--) dale();
+}
