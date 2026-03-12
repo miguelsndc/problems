@@ -1,26 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const int mxn = 1e6 + 10;
-int freq[mxn];
-int main(){
-    cin.tie(0)->sync_with_stdio(0);
-    cin.exceptions(cin.failbit);
+using ii = pair<int, int>;
+#define sz(x) ((int)(x).size())
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
     int n; cin >> n;
-    int mx = 0;
-    for (int i = 0; i < n; i++) {
-        int x; cin >> x; freq[x]++;
-        mx = max(mx, x);
-    }
-    int best = 0;
-    for (int d = 1; d <= mx; d++) {
-        int t = 0;
-        for (int m = d; m <= mx; m += d) {
-            t += freq[m];
+    vector<int> a(n);
+    for (auto &i: a) cin >> i;
+    int mx = *max_element(a.begin(), a.end());
+    vector<int> freq(mx + 1);
+    for (auto i: a) freq[i]++;
+
+    for (int i = mx; i >= 1; i--) {
+        int f = 0;
+        for (int j = i; j <= mx; j += i) {
+            f += freq[j];
         }
-        if (t > 1) {
-            best = max(best, d);
+        if (f > 1) {
+            cout << i << '\n';
+            break;
         }
     }
-    cout << best << '\n';
 }
