@@ -1,87 +1,82 @@
-#include<bits/stdc++.h>
-using ll = long long;
+#include <bits/stdc++.h>
 using namespace std;
-const int ms = 2e5 + 10;
-ll seg[4 * ms], lz[4 * ms], a[ms], inf = 1e18;
-void build(int l, int r, int v = 0) {
+using i64 = long long;
+using u64 = unsigned long long;
+using u32 = unsigned;
+
+using u128 = unsigned __int128;
+using i128 = __int128;
+
+const int ms = 2e5 + 10, mod = 1e9 + 7;
+int n, a[ms], m;
+void add(i64 &x, i64 y) {
+    x += y;
+    if (x >= mod) x -= mod;
+}
+struct node {
+    i64 l = 0, r = 0;
+    vector<i64> dp;
+    node() { dp.assign(m + 1, 0); }
+    node(int l, int r) : l(l), r(r) {
+        dp.assign(m + 1, 0);
+        if (l == -1) return;
+        dp[0] = 1;
+        add(dp[a[l] % m], 1);
+    }
+};
+vector<node> tree(4 * ms);
+node join(const node& a, const node& b) {
+    if(a.l == -1) return b;
+    if (b.l == -1) return a;
+    node ans;
+    ans.l = a.l, ans.r = b.r;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < m; j++) {
+            add(ans.dp[(i + j) % m], (a.dp[i] * b.dp[j]) % mod);
+        }
+    }
+
+    return ans;
+}
+void build(int l = 0, int r = n - 1, int v = 0) {
     if (l == r) {
-        seg[v] = a[l];
-    }
-    else {
-        int m = (l + r) / 2;
-        build(l, m, v * 2 + 1);
-        build(m + 1, r, v * 2 + 2);
-        seg[v] = min(seg[v * 2 + 1], seg[v * 2 + 2]);
-    }
-}
-void push(int v) {
-    seg[v * 2 + 1] += lz[v];
-    seg[v * 2 + 2] += lz[v];
-    lz[v * 2 + 1] += lz[v];
-    lz[v * 2 + 2] += lz[v];
-    lz[v] = 0;
-}
-void update(int a, int b, int l, int r, int add, int v = 0) {
-    if (b < l or a > r) return;
-    if (a <= l and r <= b) {
-        seg[v] += add;
-        lz[v] += add;
+        tree[v] = node(l, r);
         return;
+    } else {
+        int mid = l + (r - l) / 2;
+        build(l, mid, v * 2 + 1);
+        build(mid + 1, r, v * 2 + 2);
+        tree[v] = join(tree[v * 2 + 1], tree[v * 2 + 2]);
     }
-    push(v);
-    int m = (l + r) / 2;
-    update(a, b, l, m, add, v * 2 + 1);
-    update(a, b, m + 1, r, add, v * 2 + 2);
-    seg[v] = min(seg[v * 2 + 1], seg[v * 2 + 2]);
 }
-ll query(int a, int b, int l, int r, int v = 0) {
-    if (b < l or a > r) return inf;
-    if (a <= l and r <= b) {
-        return seg[v];
-    }
-    push(v);
-    int m = (l + r) / 2;
-    ll left = query(a, b, l, m, v * 2 + 1);
-    ll right = query(a, b, m + 1, r, v * 2 + 2);
-    return min(left, right);
+
+node query(int a, int b, int l = 0, int r = n - 1, int v = 0) {
+    if (b < l || a > r) return node(-1, -1);
+    if (a <= l && r <= b) return tree[v];
+    int mid = l + (r - l) / 2;
+    node left = query(a, b, l, mid, v * 2 + 1);
+    node right = query(a, b, mid + 1, r, v * 2 + 2);
+    return join(left, right);
 }
-void dale() {
-    int n; cin >> n;
-    cin.ignore();
+
+void solve() {
+    cin >> n >> m;
     for (int i = 0; i < n; i++) cin >> a[i];
-    cin.ignore();
-    build(0, n - 1);
-    int m; cin >> m;
-    cin.ignore();
-    while(m--) {
-        string line;
-        getline(cin, line);
-        stringstream ss(line);
-        vector<ll> qv; ll x;
-        while(ss >> x) qv.push_back(x);
-        ll l = qv[0], r = qv[1], add = inf;
-        if (qv.size() == 3) {
-            add = qv[2];
-        }
-        if (add == inf) {
-            if (l <= r) {
-                cout << query(l, r, 0, n - 1) << '\n';
-            } else {
-                ll first = query(0, r, 0, n - 1);
-                ll second = query(l, n - 1, 0, n - 1);
-                cout << min(first, second) << '\n';
-            }
-        } else {
-             if (l <= r) {
-                update(l, r, 0, n - 1, add);
-            } else {
-                update(0, r, 0, n - 1, add);
-                update(l, n - 1, 0, n - 1, add);
-            }
-        }
+    int q;
+    cin >> q;
+    build();
+    while (q--) {
+        int l, r;
+        cin >> l >> r;
+        --l, --r;
+        auto res = query(l, r).dp[0];
+        cout << (res)  << '\n';
     }
 }
+
 int main() {
-    cin.tie(0)->sync_with_stdio(false);
-    dale();
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int tt = 1;  // cin >> tt;
+    while (tt--) solve();
 }
