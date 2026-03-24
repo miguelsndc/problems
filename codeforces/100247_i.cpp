@@ -1,29 +1,31 @@
 #include <bits/stdc++.h>
 using namespace std;
-using i64 = long long;
-using u64 = unsigned long long;
-using u32 = unsigned;
-
-using u128 = unsigned __int128;
-using i128 = __int128;
+#define int long long
 
 void solve() {
     int n; cin >> n;
-    i64 tiros = 0, escudo = 0, last = 0;
+    vector<int> t(n), d(n);
+    for (int i = 0; i < n; i++) cin >> t[i] >> d[i];
+    priority_queue<int> pq;
+    int ans = 0, vida = 0, last = 0;
     for (int i = 0; i < n; i++) {
-        int t, d; cin >> t >> d;
-        escudo += (t - last);
-        if (escudo >= d) {
-            escudo -= d;
-        } else {
-            tiros++;
+        vida += (t[i] - last);
+        last = t[i];
+        
+        vida -= d[i];
+        pq.push(d[i]);
+
+        while (pq.size() > 0 and vida < 0) {
+            int k = pq.top();
+            pq.pop();
+            vida += k;
+            ans++;
         }
-        last = t;
     }
-    cout << tiros << '\n';
+    cout << ans << '\n';
 }
 
-int main() {
+signed main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
     int tt = 1; // cin >> tt;
