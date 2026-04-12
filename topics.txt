@@ -1,0 +1,13 @@
+aprender:
+
+    Aho Corasick - doing
+    Discrete log / baby step giant step
+    seg lazy
+
+reforçar:
+
+    centroid
+    small to large
+    equação diofantina
+    flow
+    convex hull / rotating calipers

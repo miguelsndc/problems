@@ -1,0 +1,26 @@
+notes
+
+07/04/2026
+
+- se eu tiver uma propriedade monotonica (quantos objetos com x caras) que pode ter valores repetidos (nao estritamente monotonica) por um tempo, considere fazer uma função f(k) = (quantos objetos com <= x caras) e responder 
+f(k) - f(k - 1).
+
+- x mod y = x - y * floor(x / y), util pra tirar um mod inconveniente.
+
+pra calcular soma j = 1 ate n de g(j) * floor(i / j), (g qualquer).
+1. floor só muda 2 sqrt(n) vezes.
+
+estando num indice l, o valor do floor é (n / l)
+o valor k é fixo até r = (n / k) (assuma r <= limite)
+entao a contribuição de g = soma_g(l, r) * k;
+l = r + 1 (pula pro prox bloco)
+roda em sqrt
+
+2. 
+
+floor(i/j) - floor(i-1 / j) = 1 se j divide i
+                              0 caso contrario
+
+entao pra um i basta calcular a contribuição de g(j) sobre os divisores de i com um crivo.
+se D é o array de diferenças Fi - Fi-1. entao prefix sum de D ate i = Fi
+pra todo j e pra cada multiplo de k de j, adiciona g(j) em D[k].
