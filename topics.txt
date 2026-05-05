@@ -1,13 +1,18 @@
-aprender:
+doing:
+segtree persistente
 
-    Aho Corasick - doing
-    Discrete log / baby step giant step
-    seg lazy
+to-do:
+Aho Corasick
+Discrete log / baby step giant step
+seg lazy - doing
+inclusao exclusao
+equação diofantina
+convex hull trick / line container
+conectividade dinamica
+hld
 
-reforçar:
+upsolvar:
 
-    centroid
-    small to large
-    equação diofantina
-    flow
-    convex hull / rotating calipers
+https://vjudge.net/contest/808019#problem/B
+https://vjudge.net/contest/808019#problem/J
+https://codeforces.com/group/btcK4I5D5f/contest/689113
